@@ -22,10 +22,10 @@ the `vets-api` directory, run `./bin/setup-osx && source ~/.bash_profile && cd
 
 #### Alternative (OSX)
 
-1. Install Ruby 2.4.5
+1. Install Ruby 2.6.6
    - It is suggested that you use a Ruby version manager such as
     [rbenv](https://github.com/rbenv/rbenv#installation) and
-    [install Ruby 2.4.5](https://github.com/rbenv/rbenv#installing-ruby-versions).
+    [install Ruby 2.6.6](https://github.com/rbenv/rbenv#installing-ruby-versions).
    - *NOTE*: rbenv will also provide additional installation instructions in the
     console output. Make sure to follow those too.
 2. Install Bundler to manage dependencies
@@ -48,9 +48,9 @@ the `vets-api` directory, run `./bin/setup-osx && source ~/.bash_profile && cd
   - `brew install clamav`
   - Take note of the the post-install instructions "To finish installation & run clamav you will need to edit the example conf files at `${conf_files_dir}`", which will vary depending on your homebrew installation
 
-    - `cd ${conf_files_dir}` 
+    - `cd ${conf_files_dir}`
     - `touch clamd.sock`
-    - `echo "LocalSocket ${conf_files_dir}" > clamd.conf` 
+    - `echo "LocalSocket ${conf_files_dir}" > clamd.conf`
     - `echo "DatabaseMirror database.clamav.net" > freshclam.conf`
     - `freshclam -v`
 
@@ -64,7 +64,7 @@ the `vets-api` directory, run `./bin/setup-osx && source ~/.bash_profile && cd
 13. Go to the file `config/settings/development.yml` in your local vets-api. Switch the commented out lines pertaining to the cache_dir: uncomment out line 14 (what you use for running the app via Rails), and comment out line 15 (what you use for running the app via Docker).
 14. Make sure you have the [vets-api-mockdata](https://github.com/department-of-veterans-affairs/vets-api-mockdata) repo locally installed, preferably in a parallel directory to `vets-api`.
 15. Make sure you have the [vets-api-mockdata](https://github.com/department-of-veterans-affairs/vets-api-mockdata) repo locally installed
-16. Create a `config/settings.local.yml` file for your local configuration overrides. Add this key pointing to your `vets-api-mockdata` directory. 
+16. Create a `config/settings.local.yml` file for your local configuration overrides. Add this key pointing to your `vets-api-mockdata` directory.
 ```
 betamocks:
   cache_dir: ../vets-api-mockdata
@@ -75,10 +75,10 @@ betamocks:
    - From the `vets-api` directory, run `./bin/install-ubuntu-packages`
 1. Edit `/etc/ImageMagick-6/policy.xml` and remove the lines below the comment `<!-- disable ghostscript format types -->`
    - This may not be necessary. The default policy was updated to [fix a variety of vulnerabilities](https://usn.ubuntu.com/3785-1/) as of October, 2018.
-1. Install Ruby 2.4.5
+1. Install Ruby 2.6.6
    - It is suggested that you use a Ruby version manager such as
     [rbenv](https://github.com/rbenv/rbenv#installation) and
-    [install Ruby 2.4.5](https://github.com/rbenv/rbenv#installing-ruby-versions).
+    [install Ruby 2.6.6](https://github.com/rbenv/rbenv#installing-ruby-versions).
    - *NOTE*: rbenv will also provide additional installation instructions in the
     console output. Make sure to follow those too.
 1. Install Bundler to manage dependencies
@@ -94,7 +94,7 @@ betamocks:
        - `touch ./config/certs/vetsgov-localhost.key`
 1. Create dev database: `bundle exec rake db:setup`
 1. Make sure you have the [vets-api-mockdata](https://github.com/department-of-veterans-affairs/vets-api-mockdata) repo locally installed, preferably in a parallel directory to `vets-api`.
-1. Create a `config/settings.local.yml` file for your local configuration overrides. Add this key pointing to your `vets-api-mockdata` directory. 
+1. Create a `config/settings.local.yml` file for your local configuration overrides. Add this key pointing to your `vets-api-mockdata` directory.
 ```
 betamocks:
   cache_dir: ../vets-api-mockdata
