@@ -5,7 +5,7 @@ Vets API requires:
 - PostgreSQL
     - Including PostGIS
 - Redis
-- Ruby 2.4.5
+- Ruby 2.6.6
 
 ### Base Setup
 
@@ -73,8 +73,6 @@ betamocks:
 #### Alternative (Ubuntu 18.04 LTS)
 1. Install Postgres, PostGIS, Redis, ImageMagick, Poppler, ClamAV, etc
    - From the `vets-api` directory, run `./bin/install-ubuntu-packages`
-1. Edit `/etc/ImageMagick-6/policy.xml` and remove the lines below the comment `<!-- disable ghostscript format types -->`
-   - This may not be necessary. The default policy was updated to [fix a variety of vulnerabilities](https://usn.ubuntu.com/3785-1/) as of October, 2018.
 1. Install Ruby 2.6.6
    - It is suggested that you use a Ruby version manager such as
     [rbenv](https://github.com/rbenv/rbenv#installation) and
@@ -85,13 +83,11 @@ betamocks:
    - `gem install bundler`
 1. Install gem dependencies: `cd vets-api; bundle install`
 1. Install overcommit `overcommit --install --sign`
-1. Setup localhost certificates / keys:
-   - Create certs directory within config:  `mkdir ./config/certs`
-   - Copy [these certificates](https://github.com/department-of-veterans-affairs/vets.gov-team/tree/master/Products/Identity/Files_From_IDme/development-certificates) into the certs dir.
-       - *NOTE*: If you don't have access to these keys, running the following
-         commands will provide basic functionality, such as for running unit tests:
-       - `touch ./config/certs/vetsgov-localhost.crt`
-       - `touch ./config/certs/vetsgov-localhost.key`
+1. For local development, SSL is disabled by default.
+   - If local SSL is desired, follow [these instructions](https://github.com/department-of-veterans-affairs/va.gov-team/tree/master/products/identity-personalization/login#additional-notes) into the certs dir.
+   - Otherwise running the following commands will provide basic functionality, such as for running unit tests:
+     - `touch ./config/certs/vetsgov-localhost.crt`
+     - `touch ./config/certs/vetsgov-localhost.key`
 1. Create dev database: `bundle exec rake db:setup`
 1. Make sure you have the [vets-api-mockdata](https://github.com/department-of-veterans-affairs/vets-api-mockdata) repo locally installed, preferably in a parallel directory to `vets-api`.
 1. Create a `config/settings.local.yml` file for your local configuration overrides. Add this key pointing to your `vets-api-mockdata` directory.
