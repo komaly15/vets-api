@@ -63,7 +63,8 @@ class UserSessionForm
       uuid: @user.uuid,
       user: {
         valid: @user&.valid?,
-        errors: @user&.errors&.full_messages
+        errors: @user&.errors&.full_messages,
+        identity_compared_with_mvi: StringHelpers.heuristics(current_user.identity.ssn, current_user.va_profile.ssn)
       },
       session: {
         valid: @session.valid?,

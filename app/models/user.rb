@@ -22,6 +22,7 @@ class User < Common::RedisStore
   redis_key :uuid
 
   validates :uuid, presence: true
+  validate :ssn_match_or_blank?
 
   with_options if: :loa3? do
     validates :ssn, format: /\A\d{9}\z/, allow_blank: true
@@ -176,6 +177,10 @@ class User < Common::RedisStore
     return false unless loa3? && identity&.ssn && va_profile&.ssn
 
     identity.ssn != va_profile.ssn
+  end
+
+  def ssn_match_or_blank?
+    !ssn_mismatch?
   end
 
   def can_access_user_profile?
