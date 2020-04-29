@@ -34,6 +34,7 @@ RSpec.describe 'Disability Rating API endpoint', type: :request do
       with_okta_configured do
         VCR.use_cassette('bgs/rating_web_service/rating_data') do
           get '/services/veteran_verification/v0/disability_rating', params: nil, headers: auth_header
+          binding.pry
           expect(response).to have_http_status(:ok)
           expect(response.body).to be_a(String)
         end
