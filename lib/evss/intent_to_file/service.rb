@@ -49,6 +49,7 @@ module EVSS
       # @param itf_type [String] Type of intent to file
       # @return [EVSS::IntentToFIle::IntentToFileResponse] Intent to file response object
       #
+      # IntentToFilesController error handling, stop 2 of 4
       def create_intent_to_file(itf_type)
         with_monitoring_and_error_handling do
           raw_response = perform(:post, itf_type.to_s, { source: ITF_SOURCE }.to_json, headers)

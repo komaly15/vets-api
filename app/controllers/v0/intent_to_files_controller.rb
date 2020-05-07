@@ -9,18 +9,21 @@ module V0
     # include `pension` and `survivor` in the future.
     TYPES = %w[compensation].freeze
 
+    # not seeing way to error service.get_intent_to_file
     def index
       response = service.get_intent_to_file
       render json: response,
              serializer: IntentToFileSerializer
     end
 
+    # not seeing way to error strategy.cache_or_service
     def active
       response = strategy.cache_or_service(@current_user.uuid, params[:type]) { service.get_active(params[:type]) }
       render json: response,
              serializer: IntentToFileSerializer
     end
 
+    # IntentToFilesController error handling, stop 1 of 4
     def submit
       response = service.create_intent_to_file(params[:type])
       render json: response,

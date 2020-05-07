@@ -35,6 +35,7 @@ module EVSS
 
     private
 
+    # IntentToFilesController error handling, stop 3 of 4
     def with_monitoring_and_error_handling
       with_monitoring(2) do
         yield
@@ -56,6 +57,7 @@ module EVSS
       )
     end
 
+    # Place where IntentToFilesController errors are handled, stop 4 of 4
     def handle_error(error)
       Raven.extra_context(
         message: error.message,

@@ -7,9 +7,9 @@ class SavedClaim::DisabilityCompensation < SavedClaim
 
   FORM_526 = 'form526'
   FORM_526_UPLOADS = 'form526_uploads'
-  FORM_4142 = 'form4142'
-  FORM_0781 = 'form0781'
-  FORM_8940 = 'form8940'
+  FORM_4142 = 'form4142' # un employability
+  FORM_0781 = 'form0781' # incidents
+  FORM_8940 = 'form8940' # un employability
 
   # For backwards compatibility, FORM constant needs to be set
   # subclasses will overwrite this constant when using `add_form_and_validation`
