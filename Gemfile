@@ -20,6 +20,7 @@ gem 'veteran_verification', path: 'modules/veteran_verification'
 gem 'puma', '~> 4.3.2'
 gem 'puma-plugin-statsd', '~> 0.1.0'
 gem 'rails', '~> 6.0.2'
+gem 'coverband'
 
 # Gems with special version/repo needs
 gem 'active_model_serializers', git: 'https://github.com/department-of-veterans-affairs/active_model_serializers', branch: 'master'

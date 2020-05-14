@@ -352,7 +352,7 @@ Rails.application.routes.draw do
   end
 
   mount Flipper::UI.app(Flipper.instance) => '/flipper', constraints: Flipper::AdminUserConstraint.new
-
+  mount Coverband::Reporters::Web.new, at: '/coverage'
   # This globs all unmatched routes and routes them as routing errors
   match '*path', to: 'application#routing_error', via: %i[get post put patch delete]
 end

@@ -27,6 +27,7 @@ services:
       - dev_bundle:/usr/local/bundle
     ports:
       - "3000:3000"
+      - "6378:6378"
     environment:
       "Settings.database_url": "postgis://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-password}@${POSTGRES_HOST:-postgres}:${POSTGRES_PORT:-5432}/${POSTGRES_DATABASE:-vets_api_development}?pool=4"
       "Settings.test_database_url": "postgis://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-password}@${POSTGRES_HOST:-postgres}:${POSTGRES_PORT:-5432}/${POSTGRES_DATABASE:-vets_api_test}?pool=4"
@@ -39,6 +40,8 @@ services:
       POSTGRES_PORT: "${POSTGRES_PORT:-5432}"
       POSTGRES_USER: "${POSTGRES_USER:-postgres}"
       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD:-password}"
+      COVERBAND_REDIS_URL: "${COVERBAND_REDIS_URL}"
+      COVERBAND_PASSWORD: "${COVERBAND_PASSWORD}"
     depends_on:
       - postgres
       - redis

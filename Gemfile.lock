@@ -265,6 +265,8 @@ GEM
     content_disposition (1.0.0)
     cork (0.3.0)
       colored2 (~> 3.1)
+    coverband (4.2.5)
+      redis
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     crass (1.0.6)
@@ -816,6 +818,7 @@ DEPENDENCIES
   clam_scan
   config
   connect_vbms!
+  coverband
   danger
   database_cleaner
   date_validator
