@@ -3,6 +3,7 @@ data:
     veteran:
       addressLine1: [contact_information, address, street]
       addressLine2: [contact_information, address, street2]
+      addressLine3: [contact_information, address, street3]
       city: [contact_information, address, city]
       stateOrProvinceCode: [contact_information, address, state]
       zipPostalCode: [contact_information, address, postal_code]

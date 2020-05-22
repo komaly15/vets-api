@@ -2,11 +2,13 @@
 
 street = '49119 Jadon Mills'
 street2 = 'Apt. 832'
+street3 = ''
 
 FactoryBot.define do
   factory :street_check, class: Hash do
     street { street }
     street2 { street2 }
+    street3 { street3 }
     initialize_with { attributes }
   end
 end
