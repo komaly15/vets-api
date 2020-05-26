@@ -694,7 +694,6 @@ RSpec.describe FormProfile, type: :model do
             'city' => user.va_profile[:address][:city],
             'stateOrProvinceCode' => user.va_profile[:address][:state],
             'zipPostalCode' => user.va_profile[:address][:postal_code][0..4],
-            'countryCode' => user.va_profile[:address][:country_code],
             'phoneNumber' => us_phone,
             'emailAddress' => user.pciu_email,
             'ssnLastFour' => user.ssn.last(4)
