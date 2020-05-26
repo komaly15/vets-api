@@ -2,7 +2,7 @@
 
 street = '49119 Jadon Mills'
 street2 = 'Apt. 832'
-street3 = ''
+street3 = 'Line 3'
 
 FactoryBot.define do
   factory :street_check, class: Hash do
