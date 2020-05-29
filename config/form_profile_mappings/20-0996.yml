@@ -1,6 +1,7 @@
 data:
   attributes:
     veteran:
+      contact_information: [contact_information]
       addressLine1: [contact_information, address, street]
       addressLine2: [contact_information, address, street2]
       addressLine3: [contact_information, address, street3]

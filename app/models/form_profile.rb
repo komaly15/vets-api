@@ -171,7 +171,7 @@ class FormProfile
   #
   def prefill(user)
     @identity_information = initialize_identity_information(user)
-    @contact_information = initialize_contact_information(user)
+    @contact_information = initialize_contact_information(user)  # prefill
     @military_information = initialize_military_information(user)
     mappings = self.class.mappings_for_form(form_id)
 
@@ -216,17 +216,20 @@ class FormProfile
     )
   end
 
+  # add address_line3
   def convert_vets360_address(address)
     {
       street: address.address_line1,
       street2: address.address_line2,
-      city: address.city,
+      street3: address.address_line3,
+      city: 'Cincinnati',
       state: address.state_code || address.province,
       country: address.country_code_iso3,
       postal_code: address.zip_plus_four || address.international_postal_code
     }.compact
   end
 
+  # calls method that adds address_line3
   def initialize_vets360_contact_info(user)
     return_val = {}
     contact_information = Vet360Redis::ContactInformation.for_user(user)
@@ -243,6 +246,7 @@ class FormProfile
     return_val
   end
 
+  # contact info method
   def initialize_contact_information(user)
     opt = {}
     opt.merge!(initialize_vets360_contact_info(user)) if Settings.vet360.prefill && user.vet360_id.present?
@@ -251,7 +255,7 @@ class FormProfile
       opt[:address] = {
         street: user.va_profile.address.street,
         street2: nil,
-        city: user.va_profile.address.city,
+        city: 'initialize_contact_information',
         state: user.va_profile.address.state,
         country: user.va_profile.address.country,
         postal_code: user.va_profile.address.postal_code
