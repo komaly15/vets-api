@@ -136,7 +136,8 @@ RSpec.describe 'Disability compensation form', type: :request do
       context 'with an `all claims` claim' do
         let(:all_claims_form) { File.read 'spec/support/disability_compensation_form/all_claims_fe_submission.json' }
 
-        it 'matches the rated disabilites schema' do
+        # will have to fake response from evss about it not being an original claim
+        it 'matches the rated disabilities schema' do
           VCR.use_cassette('evss/disability_compensation_form/submit_form') do
             post '/v0/disability_compensation_form/submit_all_claim', params: all_claims_form, headers: headers
             expect(response).to have_http_status(:ok)
@@ -148,6 +149,19 @@ RSpec.describe 'Disability compensation form', type: :request do
           VCR.use_cassette('evss/disability_compensation_form/submit_form') do
             expect(EVSS::DisabilityCompensationForm::SubmitForm526AllClaim).to receive(:perform_async).once
             post '/v0/disability_compensation_form/submit_all_claim', params: all_claims_form, headers: headers
+          end
+        end
+      end
+
+      context 'with an original `all claims` claim' do
+        let(:all_claims_form) { File.read 'spec/support/disability_compensation_form/all_claims_fe_submission.json' }
+
+        # will have to fake response from evss about original claim
+        it 'matches the rated disabilities schema' do
+          VCR.use_cassette('evss/disability_compensation_form/submit_form') do
+            post '/v0/disability_compensation_form/submit_all_claim', params: all_claims_form, headers: headers
+            expect(response).to have_http_status(:ok)
+            expect(response).to match_response_schema('submit_disability_form')
           end
         end
       end
