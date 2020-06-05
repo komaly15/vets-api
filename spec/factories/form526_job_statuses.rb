@@ -21,4 +21,15 @@ FactoryBot.define do
     error_class { 'NoMethodError' }
     error_message { 'undefined method foo for nil class' }
   end
+
+  trait :evss_error do
+    status { 'non_retryable_error' }
+    error_class { 'NoMethodError' }
+    error_message {
+      '[{"key"=>"form526.serviceInformation.servicePeriods[0].ActiveDutyEndDateMoreThan180Days" ' \
+      '"severity"=>"ERROR" "text"=>"Service members cannot submit a claim until they are within 180 days' \
+      ' of their separation date"}{"key"=>"form526.submit.establishClaim.serviceError" "severity"=>"FATAL" ' \
+      '"text"=>"Claim not established. System error with BGS. GUID: febe7a46-0fec-414a-bfe5"}]'
+    }
+  end
 end

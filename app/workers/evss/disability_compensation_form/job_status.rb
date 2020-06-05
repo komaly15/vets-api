@@ -82,7 +82,8 @@ module EVSS
       def retryable_error_handler(error)
         upsert_job_status(Form526JobStatus::STATUS[:retryable_error], error)
         log_error('retryable_error', error)
-        metrics.increment_retryable(error)
+        metrics_msg = Form526JobStatus.new(error_message: error_message(error)).error_messages_for_reporting
+        metrics.increment_retryable(metrics_msg)
       end
 
       # Metrics and logging for any non-retryable errors that occurred.
@@ -92,7 +93,8 @@ module EVSS
         upsert_job_status(Form526JobStatus::STATUS[:non_retryable_error], error)
         log_exception_to_sentry(error, status: :non_retryable_error, jid: jid)
         log_error('non_retryable_error', error)
-        metrics.increment_non_retryable(error)
+        metrics_msg = Form526JobStatus.new(error_message: error_message(error)).error_messages_for_reporting
+        metrics.increment_non_retryable(metrics_msg)
       end
 
       private
@@ -108,8 +110,12 @@ module EVSS
           updated_at: Time.now.utc
         }
         values[:error_class] = error.class if error
-        values[:error_message] = error.try(:messages) || error.message if error
+        values[:error_message] = error_message(error) if error
         Form526JobStatus.upsert({ job_id: jid }, values)
+      end
+
+      def error_message(error)
+        error.try(:messages) || error.message
       end
 
       def log_info(status)
