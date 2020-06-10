@@ -103,6 +103,7 @@ class FormProfile
     '1010EZ' => ::FormProfiles::VA1010ez,
     '20-0996' => ::FormProfiles::VA0996,
     '21-526EZ' => ::FormProfiles::VA526ez,
+    '21-526EZ-BDD' => ::FormProfiles::VA526ezBDD,
     '22-1990' => ::FormProfiles::VA1990,
     '22-1990N' => ::FormProfiles::VA1990n,
     '22-1990E' => ::FormProfiles::VA1990e,
