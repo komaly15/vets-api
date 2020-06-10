@@ -91,7 +91,7 @@ class FormProfile
   ALL_FORMS = {
     edu: %w[22-1990 22-1990N 22-1990E 22-1995 22-1995S 22-5490
             22-5495 22-0993 22-0994 FEEDBACK-TOOL 22-10203],
-    evss: ['21-526EZ', '21-526EZ-BDD'],
+    evss: %w[21-526EZ 21-526EZ-BDD],
     hca: ['1010ez'],
     pension_burial: %w[21P-530 21P-527EZ],
     dependents: ['686C-674'],
