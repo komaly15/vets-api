@@ -40,7 +40,7 @@ describe EVSS::ReferenceData::Service do
   describe '#get_separation_locations' do
     context 'with a 200 response' do
       it 'returns a list of separation_locations' do
-        VCR.use_cassette('evss/reference_data/get_intake_sites') do
+        VCR.use_cassette('evss/reference_data/intakesites') do
           expect do
             @response = subject.get_separation_locations
           end.to trigger_statsd_increment('api.external_http_request.EVSS/ReferenceData.success', times: 1)
