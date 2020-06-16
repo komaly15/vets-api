@@ -27,7 +27,6 @@ module VetsAPI
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
-    config.autoloader = :classic
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
@@ -43,10 +42,11 @@ module VetsAPI
     # This prevents rails from escaping html like & in links when working with JSON
     config.active_support.escape_html_entities_in_json = false
 
+    
     paths_name = Rails.env.development? ? 'autoload' : 'eager_load'
     config.public_send("#{paths_name}_paths") << Rails.root.join('lib')
     config.eager_load_paths << Rails.root.join('app')
-
+    
     # CORS configuration; see also cors_preflight route
     config.middleware.insert_before 0, Rack::Cors, logger: (-> { Rails.logger }) do
       allow do
