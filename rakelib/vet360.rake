@@ -11,6 +11,7 @@ namespace :vet360 do
 
   desc 'Request Vet360 person contact information'
   task :get_person, [:vet360_id] => [:environment] do |_, args|
+    require 'vet360/contact_information/service'
     ensure_arg(:vet360_id, args)
     person = Vet360::ContactInformation::Service.new(user_struct(args[:vet360_id])).get_person
     pp person.to_h
@@ -18,6 +19,7 @@ namespace :vet360 do
 
   desc 'GET Vet360 email transaction status'
   task :get_email_transaction_status, %i[vet360_id tx_audit_id] => [:environment] do |_, args|
+    require 'vet360/contact_information/service'
     ensure_arg(:vet360_id, args)
     ensure_arg(:tx_audit_id, args)
     trx = Vet360::ContactInformation::Service
@@ -28,6 +30,7 @@ namespace :vet360 do
 
   desc 'GET Vet360 address transaction status'
   task :get_address_transaction_status, %i[vet360_id tx_audit_id] => [:environment] do |_, args|
+    require 'vet360/contact_information/service'
     ensure_arg(:vet360_id, args)
     ensure_arg(:tx_audit_id, args)
     trx = Vet360::ContactInformation::Service
@@ -38,6 +41,7 @@ namespace :vet360 do
 
   desc 'GET Vet360 telephone transaction status'
   task :get_telephone_transaction_status, %i[vet360_id tx_audit_id] => [:environment] do |_, args|
+    require 'vet360/contact_information/service'
     ensure_arg(:vet360_id, args)
     ensure_arg(:tx_audit_id, args)
     trx = Vet360::ContactInformation::Service
@@ -48,6 +52,7 @@ namespace :vet360 do
 
   desc 'GET Vet360 permission transaction status'
   task :get_permission_transaction_status, %i[vet360_id tx_audit_id] => [:environment] do |_, args|
+    require 'vet360/contact_information/service'
     ensure_arg(:vet360_id, args)
     ensure_arg(:tx_audit_id, args)
     trx = Vet360::ContactInformation::Service
@@ -60,6 +65,7 @@ namespace :vet360 do
 
   desc "Update Vet360 email (from #{ENV_VAR_NAME})"
   task put_email: [:environment] do
+    require 'vet360/contact_information/service'
     # EXPECTED FORMAT OF VET360_RAKE_DATA:
     # {
     #     "email_address": "string",
@@ -85,6 +91,7 @@ namespace :vet360 do
 
   desc "Update Vet360 telephone (from #{ENV_VAR_NAME})"
   task put_telephone: [:environment] do
+    require 'vet360/contact_information/service'
     # EXPECTED FORMAT OF VET360_RAKE_DATA:
     # {
     #     "area_code": "string",
@@ -109,6 +116,7 @@ namespace :vet360 do
 
   desc "Update Vet360 address (from #{ENV_VAR_NAME})"
   task put_address: [:environment] do
+    require 'vet360/contact_information/service'
     # EXPECTED FORMAT OF VET360_RAKE_DATA:
     # {
     #     "address_id": 0,
@@ -135,6 +143,7 @@ namespace :vet360 do
 
   desc "Update Vet360 permission (from #{ENV_VAR_NAME})"
   task put_permission: [:environment] do
+    require 'vet360/contact_information/service'
     # EXPECTED FORMAT OF VET360_RAKE_DATA:
     # {
     #     "permission_type": "string",
@@ -160,6 +169,7 @@ namespace :vet360 do
 
   desc "Create Vet360 email (from #{ENV_VAR_NAME})"
   task post_email: [:environment] do
+    require 'vet360/contact_information/service'
     # EXPECTED FORMAT OF VET360_RAKE_DATA:
     # {
     #     "email_address_text": "string",
@@ -184,6 +194,7 @@ namespace :vet360 do
 
   desc "Create Vet360 telephone (from #{ENV_VAR_NAME})"
   task post_telephone: [:environment] do
+    require 'vet360/contact_information/service'
     # EXPECTED FORMAT OF BODY:
     # {
     #     "area_code": "string",
@@ -210,6 +221,7 @@ namespace :vet360 do
 
   desc "Create Vet360 address (from #{ENV_VAR_NAME})"
   task post_address: [:environment] do
+    require 'vet360/contact_information/service'
     # EXPECTED FORMAT OF BODY:
     # {
     #     "address_line1": "string",
@@ -234,6 +246,7 @@ namespace :vet360 do
 
   desc "Create Vet360 permission (from #{ENV_VAR_NAME})"
   task post_permission: [:environment] do
+    require 'vet360/contact_information/service'
     # EXPECTED FORMAT OF VET360_RAKE_DATA:
     # {
     #     "permission_type": "string",
@@ -267,6 +280,7 @@ namespace :vet360 do
     Note: There *cannot* be any spaces around the commas (i.e. [123456, 1312312, 134234234, 4234234])
   DESCRIPTION
   task :init_vet360_id, [:icns] => [:environment] do |_, args|
+    require 'vet360/person/service'
     service = Vet360::Person::Service.new('rake_user')
     icns    = args.extras.prepend(args[:icns])
     results = []
@@ -330,6 +344,7 @@ namespace :vet360 do
     9. Delete test.yml
   DESCRIPTION
   task prep_error_codes: :environment do
+    require 'vet360/exceptions/builder'
     Vet360::Exceptions::Builder.new.construct_exceptions_from_csv
   end
 
