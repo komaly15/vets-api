@@ -6,13 +6,13 @@ module EMIS
   module Messages
     # SOAP XML Message to be sent to EMIS API which contains
     # user identifier data
-    class EdipiOrIcnMessage
+    class EdipiOrICNMessage
       # User's Electronic Data Interchange Personal Identifier
       attr_reader :edipi
       # User's Integration Control Number
       attr_reader :icn
 
-      # Create a new EdipiOrIcnMessage
+      # Create a new EdipiOrICNMessage
       #
       # @param edipi [String] User's Electronic Data Interchange Personal Identifier
       # @param icn [String] User's Integration Control Number

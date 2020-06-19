@@ -108,9 +108,9 @@ module EMIS
     # @param icn [String] User's Integration Control Number
     # @param request_name [String] Request name used in XML request body
     #
-    # @return [EMIS::Messages::EdipiOrIcnMessage] SOAP request message
+    # @return [EMIS::Messages::EdipiOrICNMessage] SOAP request message
     def create_edipi_or_icn_message(edipi:, icn:, request_name:)
-      EMIS::Messages::EdipiOrIcnMessage.new(
+      EMIS::Messages::EdipiOrICNMessage.new(
         edipi: edipi,
         icn: icn,
         request_name: request_name,

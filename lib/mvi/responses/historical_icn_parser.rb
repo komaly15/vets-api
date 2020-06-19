@@ -2,7 +2,7 @@
 
 module MVI
   module Responses
-    class HistoricalIcnParser
+    class HistoricalICNParser
       HISTORICAL_ICN_XPATH = [
         ProfileParser::SUBJECT_XPATH,
         'registrationEvent',

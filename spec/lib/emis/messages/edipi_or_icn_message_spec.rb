@@ -3,12 +3,12 @@
 require 'rails_helper'
 require 'emis/messages/edipi_or_icn_message'
 
-describe EMIS::Messages::EdipiOrIcnMessage do
+describe EMIS::Messages::EdipiOrICNMessage do
   describe '.to_xml' do
     context 'with an edipi' do
       let(:edipi) { Faker::Number.number(digits: 10).to_s }
       let(:xml) do
-        EMIS::Messages::EdipiOrIcnMessage.new(edipi: edipi, request_name: 'foo').to_xml
+        EMIS::Messages::EdipiOrICNMessage.new(edipi: edipi, request_name: 'foo').to_xml
       end
 
       it 'includes the edipi' do
@@ -23,7 +23,7 @@ describe EMIS::Messages::EdipiOrIcnMessage do
     context 'with an icn' do
       let(:icn) { Faker::Number.number(digits: 10).to_s }
       let(:xml) do
-        EMIS::Messages::EdipiOrIcnMessage.new(icn: icn, request_name: 'foo').to_xml
+        EMIS::Messages::EdipiOrICNMessage.new(icn: icn, request_name: 'foo').to_xml
       end
 
       it 'includes the icn' do
@@ -38,13 +38,13 @@ describe EMIS::Messages::EdipiOrIcnMessage do
     context 'bad arguments' do
       it 'throws an argument error with neither identifier' do
         expect do
-          EMIS::Messages::EdipiOrIcnMessage.new(request_name: 'foo')
+          EMIS::Messages::EdipiOrICNMessage.new(request_name: 'foo')
         end.to raise_error(ArgumentError, 'must include either an EDIPI or ICN, but not both')
       end
 
       it 'throws an argument error with both identifiers' do
         expect do
-          EMIS::Messages::EdipiOrIcnMessage.new(edipi: 1234, icn: 5678, request_name: 'foo')
+          EMIS::Messages::EdipiOrICNMessage.new(edipi: 1234, icn: 5678, request_name: 'foo')
         end.to raise_error(ArgumentError, 'must include either an EDIPI or ICN, but not both')
       end
     end
