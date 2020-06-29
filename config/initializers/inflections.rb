@@ -24,6 +24,7 @@ ActiveSupport::Inflector.inflections do |inflect|
   inflect.acronym 'SM'
   inflect.acronym 'SSOe'
   inflect.acronym 'SSO'
+  inflect.acronym 'VA'
   inflect.acronym 'VAOS'
   inflect.acronym 'VBA'
   inflect.acronym 'VC'
