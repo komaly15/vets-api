@@ -72,6 +72,7 @@ VCR.configure do |c|
   c.filter_sensitive_data('<GIDS_URL>') { Settings.gids.url }
   c.filter_sensitive_data('<LIGHTHOUSE_API_KEY>') { Settings.lighthouse.facilities.api_key }
   c.filter_sensitive_data('<MDOT_KEY>') { Settings.mdot.api_key }
+  c.filter_sensitive_data('<DECISION_REVIEW_KEY>') { Settings.decision_review.api_key }
   c.filter_sensitive_data('<MHV_HOST>') { Settings.mhv.rx.host }
   c.filter_sensitive_data('<MHV_SM_APP_TOKEN>') { Settings.mhv.sm.app_token }
   c.filter_sensitive_data('<MHV_SM_HOST>') { Settings.mhv.sm.host }
@@ -170,18 +171,6 @@ RSpec.configure do |config|
 
   config.before :each, type: :controller do
     request.host = Settings.hostname
-  end
-
-  config.before(:all) do
-    unless defined?(Sidekiq::Batch)
-      Sidekiq::Batch = Class.new do
-        def on(_callback, _klass, _options) end
-
-        def jobs
-          yield
-        end
-      end
-    end
   end
 
   config.before do |example|

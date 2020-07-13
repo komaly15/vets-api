@@ -59,7 +59,7 @@ RSpec.describe 'Disability Claims ', type: :request do
           post path, params: data, headers: headers.merge(auth_header)
           token = JSON.parse(response.body)['data']['attributes']['token']
           aec = ClaimsApi::AutoEstablishedClaim.find(token)
-          expect(aec.source).to eq('Lighthouse-abraham lincoln')
+          expect(aec.source).to eq('abraham lincoln')
         end
       end
     end
@@ -85,6 +85,50 @@ RSpec.describe 'Disability Claims ', type: :request do
           post path, params: params.to_json, headers: headers.merge(auth_header)
           expect(response.status).to eq(422)
           expect(JSON.parse(response.body)['errors'].size).to eq(5)
+        end
+      end
+
+      it 'requires homelessness currentlyHomeless subfields' do
+        with_okta_user(scopes) do |auth_header|
+          par = json_data
+          par['data']['attributes']['veteran']['homelessness'] = {
+            "pointOfContact": {
+              "pointOfContactName": 'John Doe',
+              "primaryPhone": {
+                "areaCode": '555',
+                "phoneNumber": '555-5555'
+              }
+            },
+            "currentlyHomeless": {
+              "homelessSituationType": 'NOT_A_HOMELESS_TYPE',
+              "otherLivingSituation": 'other living situations'
+            }
+          }
+          post path, params: par.to_json, headers: headers.merge(auth_header)
+          expect(response.status).to eq(422)
+          expect(JSON.parse(response.body)['errors'].size).to eq(1)
+        end
+      end
+
+      it 'requires homelessness homelessnessRisk subfields' do
+        with_okta_user(scopes) do |auth_header|
+          par = json_data
+          par['data']['attributes']['veteran']['homelessness'] = {
+            "pointOfContact": {
+              "pointOfContactName": 'John Doe',
+              "primaryPhone": {
+                "areaCode": '555',
+                "phoneNumber": '555-5555'
+              }
+            },
+            "homelessnessRisk": {
+              "homelessnessRiskSituationType": 'NOT_RISK_TYPE',
+              "otherLivingSituation": 'other living situations'
+            }
+          }
+          post path, params: par.to_json, headers: headers.merge(auth_header)
+          expect(response.status).to eq(422)
+          expect(JSON.parse(response.body)['errors'].size).to eq(1)
         end
       end
 

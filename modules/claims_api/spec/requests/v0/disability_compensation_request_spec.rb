@@ -48,7 +48,7 @@ RSpec.describe 'Disability Claims ', type: :request do
       post path, params: data, headers: headers
       token = JSON.parse(response.body)['data']['attributes']['token']
       aec = ClaimsApi::AutoEstablishedClaim.find(token)
-      expect(aec.source).to eq('Lighthouse-TestConsumer')
+      expect(aec.source).to eq('TestConsumer')
     end
 
     it 'builds the auth headers' do
@@ -67,6 +67,46 @@ RSpec.describe 'Disability Claims ', type: :request do
         post path, params: params.to_json, headers: headers
         expect(response.status).to eq(422)
         expect(JSON.parse(response.body)['errors'].size).to eq(5)
+      end
+
+      it 'requires homelessness currentlyHomeless subfields' do
+        par = json_data
+        par['data']['attributes']['veteran']['homelessness'] = {
+          "pointOfContact": {
+            "pointOfContactName": 'John Doe',
+            "primaryPhone": {
+              "areaCode": '555',
+              "phoneNumber": '555-5555'
+            }
+          },
+          "currentlyHomeless": {
+            "homelessSituationType": 'NOT_A_HOMELESS_TYPE',
+            "otherLivingSituation": 'other living situations'
+          }
+        }
+        post path, params: par.to_json, headers: headers
+        expect(response.status).to eq(422)
+        expect(JSON.parse(response.body)['errors'].size).to eq(1)
+      end
+
+      it 'requires homelessness homelessnessRisk subfields' do
+        par = json_data
+        par['data']['attributes']['veteran']['homelessness'] = {
+          "pointOfContact": {
+            "pointOfContactName": 'John Doe',
+            "primaryPhone": {
+              "areaCode": '555',
+              "phoneNumber": '555-5555'
+            }
+          },
+          "homelessnessRisk": {
+            "homelessnessRiskSituationType": 'NOT_RISK_TYPE',
+            "otherLivingSituation": 'other living situations'
+          }
+        }
+        post path, params: par.to_json, headers: headers
+        expect(response.status).to eq(422)
+        expect(JSON.parse(response.body)['errors'].size).to eq(1)
       end
 
       it 'requires disability subfields' do
