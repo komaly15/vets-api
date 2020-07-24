@@ -41,8 +41,6 @@ module V0
       saved_claim.save ? log_success(saved_claim) : log_failure(saved_claim)
       submission = create_submission(saved_claim)
 
-      params[:is_original_claim] = original_claim?
-
       jid = submission.start(EVSS::DisabilityCompensationForm::SubmitForm526AllClaim)
 
       render json: { data: { attributes: { job_id: jid } } },
@@ -83,23 +81,23 @@ module V0
     end
 
     def log_failure(claim)
-      StatsD.increment("#{stats_key}.failure")
+      StatsD.increment("#{stats_key}.failure", tags: ["is_original_claim:#{original_claim?}"])
       raise Common::Exceptions::ValidationErrors, claim
     end
 
     def log_success(claim)
-      StatsD.increment("#{stats_key}.success")
+      StatsD.increment("#{stats_key}.success", tags: ["is_original_claim:#{original_claim?}"])
       Rails.logger.info "ClaimID=#{claim.confirmation_number} Form=#{claim.class::FORM}"
     end
 
     def original_claim?
-      claims, synchronized = EVSSClaimServiceAsync.new(@current_user).all
-      render json: claims,
-             serializer: ActiveModel::Serializer::CollectionSerializer,
-             each_serializer: EVSSClaimListSerializer,
-             meta: { sync_status: synchronized }
-      # if disability claim in claims ? true : false
-      # render json: claims.as_json
+      begin
+        claims, synchronized = EVSSClaimService.new(@current_user).all
+        # Success, response should be similar to spec/support/vcr_cassettes/evss/claims/claims.yml
+        return false if claims.length else true
+      rescue
+        return 'unknown'
+      end
     end
 
     def translate_form4142(form_content)

@@ -19,6 +19,7 @@ RSpec.describe 'EVSS Claims management', type: :request do
     end
   end
 
+  # similar to what I need to do
   it 'lists all Claims', run_at: 'Tue, 12 Dec 2017 03:09:06 GMT' do
     sign_in_as(evss_user)
     VCR.use_cassette('evss/claims/claims', match_requests_on: %i[uri method body]) do

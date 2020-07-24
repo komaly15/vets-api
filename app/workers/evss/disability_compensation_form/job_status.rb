@@ -112,21 +112,23 @@ module EVSS
         Form526JobStatus.upsert({ job_id: jid }, values)
       end
 
-      def log_info(status)
+      def log_info(status, is_original_claim=nil)
         Rails.logger.info(@status_job_title,
                           'saved_claim_id' => @status_saved_claim_id,
                           'submission_id' => @status_submission_id,
                           'job_id' => jid,
-                          'status' => status)
+                          'status' => status,
+                          'is_original_claim' => is_original_claim)
       end
 
-      def log_error(status, error)
+      def log_error(status, error, is_original_claim=nil)
         Rails.logger.error(@status_job_title,
                            'saved_claim_id' => @status_saved_claim_id,
                            'submission_id' => @status_submission_id,
                            'job_id' => jid,
                            'status' => status,
-                           'error_message' => error)
+                           'error_message' => error,
+                           'is_original_claim' => is_original_claim)
       end
 
       def klass
