@@ -1,5 +1,13 @@
 ---
   version: 2.1
+  commands:
+    checkout_and_install:
+	    steps:
+            - checkout
+            - ruby/load-cache
+            - ruby/install-deps
+            - ruby/save-cache
+
   orbs:
     ruby: circleci/ruby@0.2.1
 
@@ -25,10 +33,7 @@
             POSTGRES_PASSWORD: ""
         - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
       steps:
-        - checkout
-        - ruby/load-cache
-        - ruby/install-deps
-        - ruby/save-cache
+        - checkout_and_install
         - run:
             name: Install dependencies (pdftk, poppler)
             command: sudo apt install pdftk poppler-utils
