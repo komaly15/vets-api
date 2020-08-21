@@ -1,48 +1,5 @@
 ---
   version: 2.1
-  commands:
-    checkout_and_install:
-        steps:
-            - checkout
-            - ruby/load-cache
-            - ruby/install-deps
-            - ruby/save-cache
-    install_dependencies:
-        steps:
-            - run:
-                name: Install dependencies (pdftk, poppler)
-                command: sudo apt install pdftk poppler-utils
-    setup_test_db:
-        steps:
-            - run:
-                name: Setup test database
-                command: bundle exec rake db:create db:schema:load
-    verify_stable_pacts:
-        steps:
-            - run:
-                name: Verify stable pacts
-                command: bundle exec rake pact:verify
-    bundle_audit:
-        steps:
-            - run:
-                name: Audit bundled gems for CVE issues
-                command: bundle exec bundle-audit check --update
-    security_check:
-        steps:
-            - run:
-                name: Static security analysis using Brakeman
-                command: bundle exec brakeman --exit-on-warn --run-all-checks --confidence-level=2 -o ./ci/brakeman.html -o ./ci/brakeman.text											
-    linting:
-        steps:
-            - run:
-                name: Lint code with Rubocop
-                command: bundle exec rubocop -r rubocop-thread_safety --parallel --format progress --format RuboCop::Formatter::JUnitFormatter --out ./ci/rubocop.xml --format html --out ./ci/rubocop.html 
-    specs:
-        steps:
-            - run:
-                name: Run all RSpec specs
-                command: bundle exec rspec --pattern spec/**/*_spec.rb --pattern modules/*/spec/**/*_spec.rb --format progress --format RspecJunitFormatter -o ./rspec/rspec.xml --format html --out ./ci/rspec.html 
-
   orbs:
     ruby: circleci/ruby@0.2.1
 
@@ -86,3 +43,46 @@
     workflow:
       jobs:
         - test
+
+  commands:
+    checkout_and_install:
+        steps:
+            - checkout
+            - ruby/load-cache
+            - ruby/install-deps
+            - ruby/save-cache
+    install_dependencies:
+        steps:
+            - run:
+                name: Install dependencies (pdftk, poppler)
+                command: sudo apt install pdftk poppler-utils
+    setup_test_db:
+        steps:
+            - run:
+                name: Setup test database
+                command: bundle exec rake db:create db:schema:load
+    verify_stable_pacts:
+        steps:
+            - run:
+                name: Verify stable pacts
+                command: bundle exec rake pact:verify
+    bundle_audit:
+        steps:
+            - run:
+                name: Audit bundled gems for CVE issues
+                command: bundle exec bundle-audit check --update
+    security_check:
+        steps:
+            - run:
+                name: Static security analysis using Brakeman
+                command: bundle exec brakeman --exit-on-warn --run-all-checks --confidence-level=2 -o ./ci/brakeman.html -o ./ci/brakeman.text											
+    linting:
+        steps:
+            - run:
+                name: Lint code with Rubocop
+                command: bundle exec rubocop -r rubocop-thread_safety --parallel --format progress --format RuboCop::Formatter::JUnitFormatter --out ./ci/rubocop.xml --format html --out ./ci/rubocop.html 
+    specs:
+        steps:
+            - run:
+                name: Run all RSpec specs
+                command: bundle exec rspec --pattern spec/**/*_spec.rb --pattern modules/*/spec/**/*_spec.rb --format progress --format RspecJunitFormatter -o ./rspec/rspec.xml --format html --out ./ci/rspec.html
