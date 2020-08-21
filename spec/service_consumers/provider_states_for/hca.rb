@@ -3,8 +3,7 @@
 Pact.provider_states_for 'HCA' do
   provider_state 'a saved form exists' do
     set_up do
-      user = FactoryBot.build(:user, :loa3)
-      build_user_and_stub_session
+      user = build_user_and_stub_session
       form_id = '1010ez'
       form = InProgressForm.form_for_user(form_id, user)
       form || FactoryBot.create(:hca_in_progress_form, form_id: form_id, user_uuid: user.uuid)
