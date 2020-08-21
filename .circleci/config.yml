@@ -32,6 +32,17 @@
             - run:
                 name: Static security analysis using Brakeman
                 command: bundle exec brakeman --exit-on-warn --run-all-checks --confidence-level=2 -o ./ci/brakeman.html -o ./ci/brakeman.text											
+    linting:
+        steps:
+            - run:
+                name: Lint code with Rubocop
+                command: bundle exec rubocop -r rubocop-thread_safety --parallel --format progress --format RuboCop::Formatter::JUnitFormatter --out ./ci/rubocop.xml --format html --out ./ci/rubocop.html 
+    specs:
+        steps:
+            - run:
+                name: Run all RSpec specs
+                command: bundle exec rspec --pattern spec/**/*_spec.rb --pattern modules/*/spec/**/*_spec.rb --format progress --format RspecJunitFormatter -o ./rspec/rspec.xml --format html --out ./ci/rspec.html 
+
   orbs:
     ruby: circleci/ruby@0.2.1
 
@@ -63,15 +74,8 @@
         - verify_stable_pacts
         - bundle_audit
         - security_check
-        - run:
-            name: Static security analysis using Brakeman
-            command: bundle exec brakeman --exit-on-warn --run-all-checks --confidence-level=2 -o ./ci/brakeman.html -o ./ci/brakeman.text 
-        - run:
-            name: Lint code with Rubocop
-            command: bundle exec rubocop -r rubocop-thread_safety --parallel --format progress --format RuboCop::Formatter::JUnitFormatter --out ./ci/rubocop.xml --format html --out ./ci/rubocop.html 
-        - run:
-            name: Run all RSpec specs
-            command: bundle exec rspec --pattern spec/**/*_spec.rb --pattern modules/*/spec/**/*_spec.rb --format progress --format RspecJunitFormatter -o ./rspec/rspec.xml --format html --out ./ci/rspec.html 
+        - linting
+        - specs 
         - store_test_results:
             path: ./rspec
         - store_artifacts:
