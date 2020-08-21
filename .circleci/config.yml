@@ -2,7 +2,7 @@
   version: 2.1
   commands:
     checkout_and_install:
-	    steps:
+        steps:
             - checkout
             - ruby/load-cache
             - ruby/install-deps
