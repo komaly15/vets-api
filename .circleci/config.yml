@@ -7,7 +7,31 @@
             - ruby/load-cache
             - ruby/install-deps
             - ruby/save-cache
-
+    install_dependencies:
+        steps:
+            - run:
+                name: Install dependencies (pdftk, poppler)
+                command: sudo apt install pdftk poppler-utils
+    setup_test_db:
+        steps:
+            - run:
+                name: Setup test database
+                command: bundle exec rake db:create db:schema:load
+    verify_stable_pacts:
+        steps:
+            - run:
+                name: Verify stable pacts
+                command: bundle exec rake pact:verify
+    bundle_audit:
+        steps:
+            - run:
+                name: Audit bundled gems for CVE issues
+                command: bundle exec bundle-audit check --update
+    security_check:
+        steps:
+            - run:
+                name: Static security analysis using Brakeman
+                command: bundle exec brakeman --exit-on-warn --run-all-checks --confidence-level=2 -o ./ci/brakeman.html -o ./ci/brakeman.text											
   orbs:
     ruby: circleci/ruby@0.2.1
 
@@ -34,18 +58,11 @@
         - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
       steps:
         - checkout_and_install
-        - run:
-            name: Install dependencies (pdftk, poppler)
-            command: sudo apt install pdftk poppler-utils
-        - run:
-            name: Setup test database
-            command: bundle exec rake db:create db:schema:load
-        - run:
-            name: Verify stable pacts
-            command: bundle exec rake pact:verify
-        - run:
-            name: Audit bundled gems for CVE issues
-            command: bundle exec bundle-audit check --update
+        - install_dependencies
+        - setup_test_db
+        - verify_stable_pacts
+        - bundle_audit
+		- security_check
         - run:
             name: Static security analysis using Brakeman
             command: bundle exec brakeman --exit-on-warn --run-all-checks --confidence-level=2 -o ./ci/brakeman.html -o ./ci/brakeman.text 
