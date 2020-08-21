@@ -62,7 +62,7 @@
         - setup_test_db
         - verify_stable_pacts
         - bundle_audit
-		- security_check
+        - security_check
         - run:
             name: Static security analysis using Brakeman
             command: bundle exec brakeman --exit-on-warn --run-all-checks --confidence-level=2 -o ./ci/brakeman.html -o ./ci/brakeman.text 
