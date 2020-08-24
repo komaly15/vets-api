@@ -187,9 +187,7 @@
         - bundle_audit
         - security_audit
         - lint
-        - specs:
-            requires:
-                - verify_pacts
+        - specs
 
   commands:
     checkout_and_install:
