@@ -148,7 +148,7 @@
   workflows:
     test_and_build:
       jobs:
-        - security_audit
+        - security_audit:
             requires:
                 - lint
         - lint
