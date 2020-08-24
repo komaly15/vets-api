@@ -63,7 +63,7 @@
         - store_artifacts:
             path: ./ci
         - store_artifacts:
-            path: ./coverage		
+            path: ./coverage	
     security_audit:
       working_directory: ~/vets-api
       docker:
