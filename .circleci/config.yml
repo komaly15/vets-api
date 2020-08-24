@@ -201,7 +201,9 @@
         - audit_bundle
         - audit_security
         - lint
-        - run_specs
+        - run_specs:
+            requires:
+                - verify_pacts
 
   commands:
     checkout_and_install:
