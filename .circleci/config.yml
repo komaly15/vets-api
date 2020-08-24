@@ -57,7 +57,6 @@
         - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
       steps:
         - checkout_and_install
-        - install_dependencies
         - bundle_audit
         - store_test_results:
             path: ./rspec
@@ -87,7 +86,6 @@
         - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
       steps:
         - checkout_and_install
-        - install_dependencies
         - security_check
         - store_artifacts:
             path: ./ci	
@@ -113,7 +111,6 @@
         - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
       steps:
         - checkout_and_install
-        - install_dependencies
         - linting
         - store_artifacts:
             path: ./ci
