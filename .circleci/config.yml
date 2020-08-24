@@ -195,9 +195,13 @@
         - store_artifacts:
             path: ./coverage
   workflows:
-    workflow:
+    test_and_build:
       jobs:
-        - test
+        - verify_pacts
+		- audit_bundle
+        - audit_security
+        - lint
+        - run_specs
 
   commands:
     checkout_and_install:
