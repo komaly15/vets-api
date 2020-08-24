@@ -35,7 +35,7 @@
             path: ./ci
         - store_artifacts:
             path: ./coverage
-    audit_bundle:
+    bundle_audit:
       working_directory: ~/vets-api
       docker:
         - image: circleci/ruby:2.6.6-stretch
@@ -64,7 +64,7 @@
             path: ./ci
         - store_artifacts:
             path: ./coverage		
-    audit_security:
+    security_audit:
       working_directory: ~/vets-api
       docker:
         - image: circleci/ruby:2.6.6-stretch
@@ -114,7 +114,7 @@
         - linting
         - store_artifacts:
             path: ./ci
-    run_specs:
+    specs:
       working_directory: ~/vets-api
       docker:
         - image: circleci/ruby:2.6.6-stretch
