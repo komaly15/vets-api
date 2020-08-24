@@ -91,12 +91,8 @@
         - install_dependencies
         - setup_test_db
         - security_check
-        - store_test_results:
-            path: ./rspec
         - store_artifacts:
-            path: ./ci
-        - store_artifacts:
-            path: ./coverage		
+            path: ./ci	
     lint:
       working_directory: ~/vets-api
       docker:
@@ -122,12 +118,8 @@
         - install_dependencies
         - setup_test_db
         - linting
-        - store_test_results:
-            path: ./rspec
         - store_artifacts:
             path: ./ci
-        - store_artifacts:
-            path: ./coverage		
     run_specs:
       working_directory: ~/vets-api
       docker:
