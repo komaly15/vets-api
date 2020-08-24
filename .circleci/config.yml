@@ -195,9 +195,14 @@
     checkout_and_install:
         steps:
             - checkout
-            - ruby/load-cache
+            - restore_cache:
+               keys:
+                 - gemfile-{{ checksum "gemfile.lock" }}
             - ruby/install-deps
-            - ruby/save-cache
+            - save_cache:
+                key: gemfile-{{ checksum "gemfile.lock" }}
+                paths:
+                  - ~/.cache/gemfile
     install_dependencies:
         steps:
             - run:
