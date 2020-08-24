@@ -11,14 +11,10 @@ module V0
     def show
       form_id = params[:id]
       form    = InProgressForm.form_for_user(form_id, @current_user)
-      
-      puts "!!!!!!!!#{form.inspect}"
 
       if form
-                puts "!!!!!!!!#form exists"
         render json: form.data_and_metadata
       else
-        puts "!!!!!!!!#prefill form"
         render json: FormProfile.for(form_id).prefill(@current_user)
       end
     end
