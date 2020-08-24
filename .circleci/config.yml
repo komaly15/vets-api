@@ -7,8 +7,8 @@
     verify_pacts:
     audit_bundle:
     audit_security:
-	lint:
-	run_specs:
+    lint:
+    run_specs:
     test:
       working_directory: ~/vets-api
       docker:
