@@ -197,10 +197,10 @@
             - checkout
             - restore_cache:
                keys:
-                 - gemfile-{{ checksum "gemfile.lock" }}
+                 - gemfile-{{ checksum "Gemfile.lock" }}
             - ruby/install-deps
             - save_cache:
-                key: gemfile-{{ checksum "gemfile.lock" }}
+                key: gemfile-{{ checksum "Gemfile.lock" }}
                 paths:
                   - ~/.cache/gemfile
     install_dependencies:
