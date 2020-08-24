@@ -149,7 +149,7 @@
     test_and_build:
       jobs:
         - security_audit
-            - requires:
+            requires:
                 - lint
         - lint
 
