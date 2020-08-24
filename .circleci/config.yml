@@ -198,7 +198,7 @@
     test_and_build:
       jobs:
         - verify_pacts
-		- audit_bundle
+        - audit_bundle
         - audit_security
         - lint
         - run_specs
