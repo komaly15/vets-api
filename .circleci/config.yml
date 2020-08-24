@@ -4,7 +4,7 @@
     ruby: circleci/ruby@0.2.1
 
   jobs:
-    verify_pacts: 
+    verify_pacts:
       working_directory: ~/vets-api
       docker:
         - image: circleci/ruby:2.6.6-stretch
@@ -36,7 +36,7 @@
         - store_artifacts:
             path: ./coverage
 		
-	audit_bundle:
+    audit_bundle:
       working_directory: ~/vets-api
       docker:
         - image: circleci/ruby:2.6.6-stretch
@@ -56,7 +56,7 @@
             POSTGRES_DB: vets-api_test
             POSTGRES_PASSWORD: ""
         - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
-      steps:
+    steps:
         - checkout_and_install
         - install_dependencies
         - setup_test_db
@@ -68,7 +68,7 @@
         - store_artifacts:
             path: ./coverage
 		
-	audit_security:
+    audit_security:
       working_directory: ~/vets-api
       docker:
         - image: circleci/ruby:2.6.6-stretch
@@ -88,7 +88,7 @@
             POSTGRES_DB: vets-api_test
             POSTGRES_PASSWORD: ""
         - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
-      steps:
+    steps:
         - checkout_and_install
         - install_dependencies
         - setup_test_db
@@ -100,7 +100,7 @@
         - store_artifacts:
             path: ./coverage
 		
-	lint:
+    lint:
       working_directory: ~/vets-api
       docker:
         - image: circleci/ruby:2.6.6-stretch
@@ -133,7 +133,7 @@
         - store_artifacts:
             path: ./coverage
 		
-	run_specs:
+    run_specs:
       working_directory: ~/vets-api
       docker:
         - image: circleci/ruby:2.6.6-stretch
