@@ -148,10 +148,11 @@
   workflows:
     test_and_build:
       jobs:
-        - security_audit:
-            requires:
-                - lint
+        - verify_pacts
+        - bundle_audit
+        - security_audit
         - lint
+        - specs
 
   commands:
     checkout_and_install:
