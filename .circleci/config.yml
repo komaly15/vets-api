@@ -58,7 +58,6 @@
       steps:
         - checkout_and_install
         - install_dependencies
-        - setup_test_db
         - bundle_audit
         - store_test_results:
             path: ./rspec
@@ -89,7 +88,6 @@
       steps:
         - checkout_and_install
         - install_dependencies
-        - setup_test_db
         - security_check
         - store_artifacts:
             path: ./ci	
@@ -116,7 +114,6 @@
       steps:
         - checkout_and_install
         - install_dependencies
-        - setup_test_db
         - linting
         - store_artifacts:
             path: ./ci
