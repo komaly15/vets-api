@@ -187,7 +187,7 @@
         - verify_pacts
         - when:
           condition: << pipeline.parameters.verify_stable_pacts >>
-		  - pact_verification
+          - pact_verification
         - bundle_audit
         - security_audit
         - lint
