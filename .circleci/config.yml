@@ -185,8 +185,9 @@
     test_and_build:
       jobs:
         - verify_pacts
-		- pact_webhook:
-		    when: << pipeline.parameters.verify_stable_pacts >>
+        - pact_verification:
+          - when:
+            condition: << pipeline.parameters.verify_stable_pacts >> 
         - bundle_audit
         - security_audit
         - lint
