@@ -159,6 +159,10 @@
         - security_audit
         - lint
         - specs
+    validate_pacts:
+      when: << pipeline.parameters.verify_stable_pacts >>
+      jobs:
+        - verify_pacts
 
   commands:
     checkout_and_install:
