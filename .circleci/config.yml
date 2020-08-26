@@ -68,7 +68,7 @@
         - store_artifacts:
             path: ./ci
         - store_artifacts:
-            path: ./coverage	
+            path: ./coverage		
     security_audit:
       working_directory: ~/vets-api
       docker:
@@ -158,10 +158,6 @@
         - security_audit
         - lint
         - specs
-    pact_verification:
-      when: << pipeline.parameters.verify_stable_pacts >>
-      jobs:
-        - verify_pacts
 
   commands:
     checkout_and_install:
