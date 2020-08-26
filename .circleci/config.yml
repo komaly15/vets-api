@@ -3,11 +3,6 @@
   orbs:
     ruby: circleci/ruby@0.2.1
 
-  parameters:
-    verify_stable_pacts:
-      type: boolean
-      default: false	
-
   jobs:
     verify_pacts:
       working_directory: ~/vets-api
@@ -158,6 +153,10 @@
         - security_audit
         - lint
         - specs
+    pact_verification:
+      when: << pipeline.parameters.verify_stable_pacts >>
+      jobs:
+        - verify_pacts
 
   commands:
     checkout_and_install:
