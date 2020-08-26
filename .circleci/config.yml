@@ -3,6 +3,11 @@
   orbs:
     ruby: circleci/ruby@0.2.1
 
+  parameters:
+    verify_stable_pacts:
+      type: boolean
+      default: false
+	  
   jobs:
     verify_pacts:
       working_directory: ~/vets-api
