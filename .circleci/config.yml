@@ -10,38 +10,6 @@
       default: false	
 
   jobs:
-    pact_webhook:
-      when: << pipeline.parameters.verify_stable >>
-      working_directory: ~/vets-api
-      docker:
-        - image: circleci/ruby:2.6.6-stretch
-          environment:
-            BUNDLE_JOBS: 2
-            BUNDLE_RETRY: 3
-            LANG: en_US.UTF-8
-            PGHOST: localhost
-            PGUSER: vets-api
-            RAILS_ENV: test
-            "Settings.saml.cert_path": "spec/support/certificates/ruby-saml.crt"
-            "Settings.saml.key_path": "spec/support/certificates/ruby-saml.key"
-            "Settings.binaries.clamdscan": "clamscan"
-        - image: circleci/postgres:11.5-postgis-ram # 11.5 engine on AWS RDS
-          environment:
-            POSTGRES_USER: vets-api
-            POSTGRES_DB: vets-api_test
-            POSTGRES_PASSWORD: ""
-        - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
-      steps:
-        - checkout_and_install
-        - install_dependencies
-        - setup_test_db
-        - verify_stable_pacts
-        - store_test_results:
-            path: ./rspec
-        - store_artifacts:
-            path: ./ci
-        - store_artifacts:
-            path: ./coverage	  
     verify_pacts:
       working_directory: ~/vets-api
       docker:
@@ -185,13 +153,17 @@
             path: ./coverage
   workflows:
     test_and_build:
+      unless: << pipeline.parameters.verify_stable_pacts >>
       jobs:
         - verify_pacts
-        - pact_webhook
         - bundle_audit
         - security_audit
         - lint
         - specs
+    pact_verification:
+      when: << pipeline.parameters.verify_stable_pacts >>
+      jobs:
+        - verify_pacts 
 
   commands:
     checkout_and_install:
