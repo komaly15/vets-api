@@ -5,11 +5,13 @@
 
   parameters:
     verify_stable_pacts:
+    verify_stable:
       type: boolean
       default: false	
 
   jobs:
     pact_webhook:
+      when: << pipeline.parameters.verify_stable >>
       working_directory: ~/vets-api
       docker:
         - image: circleci/ruby:2.6.6-stretch
