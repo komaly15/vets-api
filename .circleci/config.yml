@@ -153,7 +153,7 @@
   workflows:
     test_and_build:
       jobs:
-        - verify_pacts
+        - verify_pacts 
         - bundle_audit
         - security_audit
         - lint
