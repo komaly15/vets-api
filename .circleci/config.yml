@@ -3,6 +3,11 @@
   orbs:
     ruby: circleci/ruby@0.2.1
 
+  parameters:
+    verify_stable_pacts:
+      type: boolean
+      default: false	
+
   jobs:
     verify_pacts:
       working_directory: ~/vets-api
@@ -63,7 +68,7 @@
         - store_artifacts:
             path: ./ci
         - store_artifacts:
-            path: ./coverage		
+            path: ./coverage	
     security_audit:
       working_directory: ~/vets-api
       docker:
