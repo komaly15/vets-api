@@ -153,9 +153,6 @@
         - security_audit
         - lint
         - specs
-    validate_pacts:
-      jobs:
-        - verify_pacts
 
   commands:
     checkout_and_install:
