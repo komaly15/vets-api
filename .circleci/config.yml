@@ -2,7 +2,7 @@
   version: 2.1
   orbs:
     ruby: circleci/ruby@0.2.1
-	
+
   jobs:
     verify_pacts:
       working_directory: ~/vets-api
@@ -148,7 +148,7 @@
   workflows:
     test_and_build:
       jobs:
-        - verify_pacts 
+        - verify_pacts
         - bundle_audit
         - security_audit
         - lint
