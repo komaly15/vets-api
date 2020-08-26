@@ -127,7 +127,7 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   # serializer_spec_helper
-  config.include SerializerSpecHelper, type: :serializer
+  config.include SerializerSpecHelper, type: :serializer 
 
   # authentication_session_helper
   config.include AuthenticatedSessionHelper, type: :request
