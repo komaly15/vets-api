@@ -6,7 +6,7 @@
   jobs:
     verify_pacts:
       steps:
-		- setup
+        - setup
         - checkout_and_install
         - install_dependencies
         - setup_test_db
