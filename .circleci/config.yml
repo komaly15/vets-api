@@ -2,10 +2,9 @@
   version: 2.1
   orbs:
     ruby: circleci/ruby@0.2.1
- 
-  jobs:
-    verify_pacts:
-      working_directory: ~/vets-api
+  
+  executors:
+    vets_api_docker_executor:
       docker:
         - image: circleci/ruby:2.6.6-stretch
           environment:
@@ -24,6 +23,11 @@
             POSTGRES_DB: vets-api_test
             POSTGRES_PASSWORD: ""
         - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
+
+  jobs:
+    verify_pacts:
+      working_directory: ~/vets-api
+      executor: vets_api_docker_executor
       steps:
         - checkout_and_install
         - install_dependencies
