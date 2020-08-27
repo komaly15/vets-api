@@ -155,7 +155,7 @@
             path: ./coverage
   workflows:
     test_and_build:
-      when: << pipeline.parameters.vets_api_build >>
+      when: << pipeline.parameters.vets_api_build >> 
       jobs:
         - verify_pacts
         - bundle_audit
