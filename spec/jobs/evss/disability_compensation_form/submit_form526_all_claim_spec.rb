@@ -24,6 +24,14 @@ RSpec.describe EVSS::DisabilityCompensationForm::SubmitForm526AllClaim, type: :j
              saved_claim_id: saved_claim.id)
     end
 
+    let(:bdd_submission) do
+      create(:form526_submission, :bdd_form,
+             user_uuid: user.uuid,
+             auth_headers_json: auth_headers.to_json,
+             saved_claim_id: saved_claim.id,
+             submitted_claim_id: '600130094')
+    end
+
     context 'with a successful submission job' do
       it 'queues a job for submit' do
         expect do
@@ -89,7 +97,22 @@ RSpec.describe EVSS::DisabilityCompensationForm::SubmitForm526AllClaim, type: :j
       it 'runs the retryable_error_handler and raises a gateway timeout' do
         EVSS::DisabilityCompensationForm::Configuration.instance.breakers_service.begin_forced_outage!
         subject.perform_async(submission.id)
-        expect_any_instance_of(EVSS::DisabilityCompensationForm::Metrics).to receive(:increment_retryable).once
+        expect_any_instance_of(EVSS::DisabilityCompensationForm::Metrics).to(
+          receive(:increment_retryable).once.with(any_args, false)
+        )
+        expect(Form526JobStatus).to receive(:upsert).twice
+        expect(Rails.logger).to receive(:error).once
+        expect { described_class.drain }.to raise_error(Breakers::OutageException)
+      end
+    end
+
+    context 'bdd form with a breakers outage' do
+      it 'runs the retryable_error_handler and raises a gateway timeout' do
+        EVSS::DisabilityCompensationForm::Configuration.instance.breakers_service.begin_forced_outage!
+        subject.perform_async(bdd_submission.id)
+        expect_any_instance_of(EVSS::DisabilityCompensationForm::Metrics).to(
+          receive(:increment_retryable).once.with(any_args, true)
+        )
         expect(Form526JobStatus).to receive(:upsert).twice
         expect(Rails.logger).to receive(:error).once
         expect { described_class.drain }.to raise_error(Breakers::OutageException)

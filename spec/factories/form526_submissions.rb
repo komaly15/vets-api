@@ -14,6 +14,12 @@ FactoryBot.define do
     end
   end
 
+  trait :bdd_form do
+    form_json do
+      File.read("#{::Rails.root}/spec/support/disability_compensation_form/submissions/526_bdd.json")
+    end
+  end
+
   trait :with_uploads do
     form_json do
       File.read("#{::Rails.root}/spec/support/disability_compensation_form/submissions/with_uploads.json")
