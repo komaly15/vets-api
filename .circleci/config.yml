@@ -137,7 +137,7 @@
         - specs
 
   commands:
-    setup:
+    setup: 
       working_directory: ~/vets-api
       docker:
         - image: circleci/ruby:2.6.6-stretch
