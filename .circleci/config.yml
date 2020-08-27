@@ -155,8 +155,6 @@
         - specs
 
   commands:
-    setup:
-		
     checkout_and_install:
         steps:
             - checkout
