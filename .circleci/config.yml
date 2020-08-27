@@ -6,7 +6,10 @@
   parameters:
     verify_stable_pacts:
       type: boolean
-      default: false	
+      default: false
+    vets_api_build:
+      type: boolean
+      default: true	
 
   jobs:
     verify_pacts:
@@ -151,7 +154,7 @@
         - store_artifacts:
             path: ./coverage
   workflows:
-    test_and_build:
+    when: << pipeline.parameters.vets_api_build >>
       jobs:
         - verify_pacts
         - bundle_audit
