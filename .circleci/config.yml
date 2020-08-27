@@ -152,17 +152,12 @@
             path: ./coverage
   workflows:
     test_and_build:
-      unless: << pipeline.parameters.verify_stable_pacts >>
       jobs:
         - verify_pacts
         - bundle_audit
         - security_audit
         - lint
         - specs
-    pact_verification:
-      when: << pipeline.parameters.verify_stable_pacts >> 
-      jobs:
-        - verify_pacts 
 
   commands:
     checkout_and_install:
