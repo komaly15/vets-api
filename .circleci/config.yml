@@ -3,12 +3,15 @@
   orbs:
     ruby: circleci/ruby@0.2.1
 
+  # Pipeline params are needed for API v2 in order to 
+  # trigger a conditional verification task workflow via webhook from the pact broker
+  # Triggering a specific job via v1.1 of the Circle API is being depreciated
   parameters:
     verify_stable_pacts:
       type: boolean
-      default: false
+      default: false 
   
-  executors:
+  executors: 
     vets_api_docker_executor:
       docker:
         - image: circleci/ruby:2.6.6-stretch
@@ -88,7 +91,7 @@
         - store_artifacts:
             path: ./coverage
   workflows:
-    test_and_build:
+    test_and_build: 
       unless: << pipeline.parameters.verify_stable_pacts >>
       jobs:
         - verify_pacts
@@ -143,9 +146,6 @@
             - run:
                 name: Split tests by timing
                 command: circleci tests glob "spec/**/*_spec.rb" + glob "modules/*/spec/**/*_spec.rb" | circleci tests split --split-by=timings > /tmp/tests-to-run
-            - run:
-                name: test splitting fienames
-                command: echo $(cat /tmp/tests-to-run)
             - run:
                 name: Run all RSpec specs
                 command: bundle exec rspec --pattern $(cat /tmp/tests-to-run) --format progress --format RspecJunitFormatter -o ./rspec/rspec.xml --format html --out ./ci/rspec.html
