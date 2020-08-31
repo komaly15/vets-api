@@ -140,5 +140,11 @@
     specs:
         steps:
             - run:
+                name: Split tests by timing
+                command: circleci tests glob "spec/**/*_spec.rb" + glob "modules/*/spec/**/*_spec.rb" | circleci tests split > /tmp/tests-to-run
+            - run:
+                name: See contents of temp file per container
+                command: echo $(cat /tmp/tests-to-run)
+            - run:
                 name: Run all RSpec specs
-                command: bundle exec rspec --pattern spec/**/*_spec.rb --pattern modules/*/spec/**/*_spec.rb --format progress --format RspecJunitFormatter -o ./rspec/rspec.xml --format html --out ./ci/rspec.html
+                command: bundle exec rspec $(cat /tmp/tests-to-run) --format progress --format RspecJunitFormatter -o ./rspec/rspec.xml --format html --out ./ci/rspec.html
