@@ -87,6 +87,7 @@
         - install_dependencies
         - setup_test_db
         - specs
+        - merge_coverage_data
         - store_test_results:
             path: ./rspec
         - store_artifacts:
@@ -103,7 +104,6 @@
         - security_audit
         - lint
         - specs
-        - merge_coverage_data
     pact_verification:
       when: << pipeline.parameters.verify_stable_pacts >>
       jobs:
