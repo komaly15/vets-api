@@ -9,7 +9,7 @@
   parameters:
     verify_stable_pacts:
       type: boolean
-      default: false 
+      default: false
   
   executors: 
     vets_api_docker_executor:
@@ -45,6 +45,8 @@
             path: ./rspec
         - store_artifacts:
             path: ./ci
+        - store_artifacts:
+            path: ./coverage
     bundle_audit:
       working_directory: ~/vets-api
       executor: vets_api_docker_executor
@@ -54,7 +56,9 @@
         - store_test_results:
             path: ./rspec
         - store_artifacts:
-            path: ./ci	
+            path: ./ci
+        - store_artifacts:
+            path: ./coverage	
     security_audit:
       working_directory: ~/vets-api
       executor: vets_api_docker_executor
@@ -79,7 +83,7 @@
         - checkout_and_install
         - install_dependencies
         - setup_test_db
-        - specs:
+        - specs
         - store_test_results:
             path: ./rspec
         - store_artifacts:
