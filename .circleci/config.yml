@@ -46,6 +46,8 @@
             path: ./rspec
         - store_artifacts:
             path: ./ci
+        - store_artifacts:
+            path: ./coverage
     bundle_audit:
       working_directory: ~/vets-api
       executor: vets_api_docker_executor
@@ -56,6 +58,8 @@
             path: ./rspec
         - store_artifacts:
             path: ./ci
+        - store_artifacts:
+            path: ./coverage	
     security_audit:
       working_directory: ~/vets-api
       executor: vets_api_docker_executor
@@ -81,13 +85,12 @@
         - install_dependencies
         - setup_test_db
         - specs
-        - merge_coverage_data
         - store_test_results:
             path: ./rspec
         - store_artifacts:
             path: ./ci
         - store_artifacts:
-            path: test-artifacts
+            path: ./coverage
   workflows:
     test_and_build: 
       unless: << pipeline.parameters.verify_stable_pacts >>
@@ -114,11 +117,6 @@
             - run:
                 name: Install dependencies (pdftk, poppler)
                 command: sudo apt install pdftk poppler-utils
-            - run:
-                name: install Code Climate Test Reporter
-                command: |
-                  curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-                  chmod +x ./cc-test-reporter				  
     setup_test_db:
         steps:
             - run:
@@ -146,27 +144,9 @@
                 command: bundle exec rubocop -r rubocop-thread_safety --parallel --format progress --format RuboCop::Formatter::JUnitFormatter --out ./ci/rubocop.xml --format html --out ./ci/rubocop.html 
     specs:
         steps:
-            - run: 
-                name: Make test artifact dir
-                command: |
-                  mkdir -p test-results/rspec test-artifacts
-                  ./cc-test-reporter before-build                
             - run:
                 name: Split tests by timing
                 command: circleci tests glob "spec/**/*_spec.rb" + glob "modules/*/spec/**/*_spec.rb" | circleci tests split --split-by=timings > /tmp/tests-to-run
             - run:
                 name: Run all RSpec specs
                 command: bundle exec rspec --pattern $(cat /tmp/tests-to-run) --format progress --format RspecJunitFormatter -o ./rspec/rspec.xml --format html --out ./ci/rspec.html
-            - run:
-                name: Code Climate Test Coverage
-                command: |
-                   ./cc-test-reporter format-coverage -t simplecov -o "coverage/codeclimate.$CIRCLE_NODE_INDEX.json"
-            - persist_to_workspace:
-                root: coverage
-                paths:
-                  - codeclimate.*.json
-    merge_coverage_data:
-        steps:
-            - run:
-                name: Merge and copy coverage data
-                command: bundle exec report_coverage				
