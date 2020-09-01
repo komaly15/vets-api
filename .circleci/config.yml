@@ -90,7 +90,7 @@
             name: Stash coverage Results
             command: |
                 mkdir coverage_results
-                cp -R coverage/.resultset.json coverage_results/.resultset-${CIRCLE_NODE_INDEX}.json
+                cp -R coverage/.resultset.json coverage_results/.resultset-${CIRCLE_NODE_INDEX}.json 
         - persist_to_workspace:
             root: .
             paths:
