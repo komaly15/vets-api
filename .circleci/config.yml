@@ -83,7 +83,8 @@
         - checkout_and_install
         - install_dependencies
         - setup_test_db
-        - specs
+        - specs:
+          parallel: true
         - store_test_results:
             path: ./rspec
         - store_artifacts:

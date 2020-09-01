@@ -140,6 +140,7 @@ group :test do
   # < 0.18 required due to bug with reporting to CodeClimate
   # https://github.com/codeclimate/test-reporter/issues/418
   gem 'simplecov', '< 0.18', require: false
+  gem 'simplecov-parallel'
   gem 'super_diff'
   gem 'vcr'
   gem 'webrick'
