@@ -103,6 +103,9 @@
         - security_audit
         - lint
         - specs
+        - merge_coverage_data
+          requires:
+            - specs
     pact_verification:
       when: << pipeline.parameters.verify_stable_pacts >>
       jobs:
