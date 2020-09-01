@@ -21,8 +21,6 @@ require 'pundit/rspec'
 unless ENV['NOCOVERAGE']
   require 'simplecov'
   
-  SimpleCov.command_name "rspec_tests" + (ENV['CI_NODE'] || '')
-
   SimpleCov.start 'rails' do
     track_files '**/{app,lib}/**/*.rb'
 
