@@ -87,19 +87,19 @@
         - store_test_results:
             path: /tmp/rspec
     coverage:
-        working_directory: ~/vets-api
-        executor: vets_api_docker_executor
-        steps:
-          - checkout_and_install
-          - install_dependencies
-          - setup_test_db
-          - run:
-              name: Merge and check coverage
-              command: |
-                RUN_COVERAGE=true bundle exec rake simplecov:report_coverage
-          - store_artifacts:
-              path: ~/vets-api/coverage
-              destination: coverage 
+      working_directory: ~/vets-api
+      executor: vets_api_docker_executor
+      parallelism: 4
+      steps:
+        - checkout_and_install
+        - install_dependencies
+        - setup_test_db
+        - run:
+            name: Merge and Check Coverage
+            command: RUN_COVERAGE=true bundle exec rake simplecov:report_coverage
+        - store_artifacts:
+            path: ~/vets-api/coverage
+            destination: coverage
   workflows:
     test_and_build: 
       unless: << pipeline.parameters.verify_stable_pacts >>
