@@ -2,13 +2,13 @@
 
 # spec/simplecov_helper.rb
 require 'active_support/inflector'
-require "simplecov"
+require 'simplecov'
 
 class SimpleCovHelper
-  def self.report_coverage(base_dir: "./coverage_results")
+  def self.report_coverage(base_dir: './coverage_results')
     SimpleCov.start 'rails' do
-      skip_check_coverage = ENV.fetch("SKIP_COVERAGE_CHECK", "false")
-      
+      skip_check_coverage = ENV.fetch('SKIP_COVERAGE_CHECK', 'false')
+
       track_files '**/{app,lib}/**/*.rb'
 
       add_filter 'app/controllers/concerns/accountable.rb'
