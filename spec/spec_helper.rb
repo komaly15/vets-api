@@ -20,8 +20,8 @@ require 'pundit/rspec'
 # By default run SimpleCov, but allow an environment variable to disable.
 unless ENV['NOCOVERAGE']
   require 'simplecov'
-  require 'simplecov/parallel'
-  SimpleCov::Parallel.activate
+  
+  SimpleCov.command_name "rspec_tests" + (ENV['CI_NODE'] || '')
 
   SimpleCov.start 'rails' do
     track_files '**/{app,lib}/**/*.rb'
