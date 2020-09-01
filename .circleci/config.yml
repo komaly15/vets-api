@@ -78,7 +78,6 @@
     specs:
       working_directory: ~/vets-api
       executor: vets_api_docker_executor
-      parallelism: 4
       steps:
         - checkout_and_install
         - install_dependencies
@@ -145,7 +144,7 @@
         steps:
             - run:
                 name: Split tests by timing
-                command: circleci tests glob "spec/**/*_spec.rb" + glob "modules/*/spec/**/*_spec.rb" | circleci tests split --split-by=filesize > /tmp/tests-to-run
+                command: circleci tests glob "spec/**/*_spec.rb" + glob "modules/*/spec/**/*_spec.rb" > /tmp/tests-to-run
             - run:
                 name: Run all RSpec specs
                 command: bundle exec rspec --pattern $(cat /tmp/tests-to-run) --format progress --format RspecJunitFormatter -o ./rspec/rspec.xml --format html --out ./ci/rspec.html
