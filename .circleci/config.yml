@@ -30,6 +30,7 @@
             POSTGRES_USER: vets-api
             POSTGRES_DB: vets-api_test
             POSTGRES_PASSWORD: ""
+            CIRCLE_TOKEN: 424e02219a53b1fa84da0a479a71017712e421e4
         - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
 
   jobs:
@@ -46,7 +47,8 @@
         - store_artifacts:
             path: ./ci
         - store_artifacts:
-            path: ./coverage
+            path: coverage/.resultset.json
+            prefix: coverage
     bundle_audit:
       working_directory: ~/vets-api
       executor: vets_api_docker_executor
@@ -58,7 +60,8 @@
         - store_artifacts:
             path: ./ci
         - store_artifacts:
-            path: ./coverage	
+            path: coverage/.resultset.json
+            prefix: coverage	
     security_audit:
       working_directory: ~/vets-api
       executor: vets_api_docker_executor
@@ -89,7 +92,8 @@
         - store_artifacts:
             path: ./ci
         - store_artifacts:
-            path: ./coverage
+            path: coverage/.resultset.json
+            prefix: coverage
   workflows:
     test_and_build: 
       unless: << pipeline.parameters.verify_stable_pacts >>
@@ -149,3 +153,8 @@
             - run:
                 name: Run all RSpec specs
                 command: bundle exec rspec --pattern $(cat /tmp/tests-to-run) --format progress --format RspecJunitFormatter -o ./rspec/rspec.xml --format html --out ./ci/rspec.html
+    merge_coverage_data:
+        steps:
+            - run:
+                name: Merge and copy coverage data
+                command: bundle exec report_coverage				
