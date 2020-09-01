@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
+
 # spec/simplecov_helper.rb
 require 'active_support/inflector'
 require 'simplecov'
