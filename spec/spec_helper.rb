@@ -20,7 +20,7 @@ require 'pundit/rspec'
 # By default run SimpleCov, but allow an environment variable to disable.
 unless ENV['NOCOVERAGE']
   require 'simplecov'
-  
+
   SimpleCov.start 'rails' do
     track_files '**/{app,lib}/**/*.rb'
 

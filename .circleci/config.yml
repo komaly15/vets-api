@@ -46,9 +46,6 @@
             path: ./rspec
         - store_artifacts:
             path: ./ci
-        - store_artifacts:
-            path: coverage/.resultset.json
-            prefix: coverage
     bundle_audit:
       working_directory: ~/vets-api
       executor: vets_api_docker_executor
@@ -59,9 +56,6 @@
             path: ./rspec
         - store_artifacts:
             path: ./ci
-        - store_artifacts:
-            path: coverage/.resultset.json
-            prefix: coverage	
     security_audit:
       working_directory: ~/vets-api
       executor: vets_api_docker_executor
@@ -93,8 +87,7 @@
         - store_artifacts:
             path: ./ci
         - store_artifacts:
-            path: coverage/.resultset.json
-            prefix: coverage
+            path: test-artifacts
   workflows:
     test_and_build: 
       unless: << pipeline.parameters.verify_stable_pacts >>
@@ -121,6 +114,11 @@
             - run:
                 name: Install dependencies (pdftk, poppler)
                 command: sudo apt install pdftk poppler-utils
+            - run:
+                name: install Code Climate Test Reporter
+                command: |
+                  curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+                  chmod +x ./cc-test-reporter				  
     setup_test_db:
         steps:
             - run:
@@ -154,6 +152,14 @@
             - run:
                 name: Run all RSpec specs
                 command: bundle exec rspec --pattern $(cat /tmp/tests-to-run) --format progress --format RspecJunitFormatter -o ./rspec/rspec.xml --format html --out ./ci/rspec.html
+            - run:
+                name: Code Climate Test Coverage
+                command: |
+                   ./cc-test-reporter format-coverage -t simplecov -o "coverage/codeclimate.$CIRCLE_NODE_INDEX.json"
+            - persist_to_workspace:
+                root: coverage
+                paths:
+                  - codeclimate.*.json
     merge_coverage_data:
         steps:
             - run:
