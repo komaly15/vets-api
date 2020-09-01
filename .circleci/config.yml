@@ -146,6 +146,11 @@
                 command: bundle exec rubocop -r rubocop-thread_safety --parallel --format progress --format RuboCop::Formatter::JUnitFormatter --out ./ci/rubocop.xml --format html --out ./ci/rubocop.html 
     specs:
         steps:
+            - run: 
+                name: Make test artifact dir
+                command: |
+                  mkdir -p test-results/rspec test-artifacts
+                  ./cc-test-reporter before-build                
             - run:
                 name: Split tests by timing
                 command: circleci tests glob "spec/**/*_spec.rb" + glob "modules/*/spec/**/*_spec.rb" | circleci tests split --split-by=timings > /tmp/tests-to-run
