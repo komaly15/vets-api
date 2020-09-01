@@ -22,6 +22,7 @@
             PGHOST: localhost
             PGUSER: vets-api
             RAILS_ENV: test
+            NO_COVERAGE: true
             "Settings.saml.cert_path": "spec/support/certificates/ruby-saml.crt"
             "Settings.saml.key_path": "spec/support/certificates/ruby-saml.key"
             "Settings.binaries.clamdscan": "clamscan"
@@ -30,7 +31,6 @@
             POSTGRES_USER: vets-api
             POSTGRES_DB: vets-api_test
             POSTGRES_PASSWORD: ""
-            NO_COVERAGE: true
         - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
 
   jobs:
