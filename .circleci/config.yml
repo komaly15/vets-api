@@ -30,7 +30,7 @@
             POSTGRES_USER: vets-api
             POSTGRES_DB: vets-api_test
             POSTGRES_PASSWORD: ""
-            CIRCLE_TOKEN: 424e02219a53b1fa84da0a479a71017712e421e4
+            NO_COVERAGE: true
         - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
 
   jobs:
