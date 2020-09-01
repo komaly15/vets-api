@@ -86,7 +86,7 @@
         - specs
         - store_test_results:
             path: /tmp/rspec
-     coverage:
+    coverage:
         working_directory: ~/vets-api
         executor: vets_api_docker_executor
         steps:
