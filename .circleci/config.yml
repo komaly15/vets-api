@@ -85,11 +85,30 @@
         - setup_test_db
         - specs
         - store_test_results:
-            path: ./rspec
-        - store_artifacts:
-            path: ./ci
-        - store_artifacts:
-            path: ./coverage
+            path: /tmp/rspec
+        - run:
+            name: Stash Coverage Results
+        command: |
+            mkdir coverage_results
+            cp -R coverage/.resultset.json coverage_results/.resultset-${CIRCLE_NODE_INDEX}.json
+      - persist_to_workspace:
+          root: .
+          paths:
+            - coverage_results
+     coverage:
+        working_directory: ~/vets-api
+        executor: vets_api_docker_executor
+        steps:
+          - checkout_and_install
+          - install_dependencies
+          - setup_test_db
+          - run:
+              name: Merge and check coverage
+              command: |
+                RUN_COVERAGE=true bundle exec rake simplecov:report_coverage
+          - store_artifacts:
+              path: ~/vets-api/coverage
+              destination: coverage 
   workflows:
     test_and_build: 
       unless: << pipeline.parameters.verify_stable_pacts >>
@@ -99,6 +118,9 @@
         - security_audit
         - lint
         - specs
+        - coverage:
+            requires:
+              - specs
     pact_verification:
       when: << pipeline.parameters.verify_stable_pacts >>
       jobs:
