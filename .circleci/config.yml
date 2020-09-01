@@ -86,15 +86,6 @@
         - specs
         - store_test_results:
             path: /tmp/rspec
-        - run:
-            name: Stash Coverage Results
-            command: |
-                mkdir coverage_results
-                cp -R coverage/.resultset.json coverage_results/.resultset-${CIRCLE_NODE_INDEX}.json
-        - persist_to_workspace:
-            root: .
-            paths:
-              - coverage_results
      coverage:
         working_directory: ~/vets-api
         executor: vets_api_docker_executor
