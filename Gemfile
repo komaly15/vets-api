@@ -129,7 +129,6 @@ end
 group :test do
   gem 'apivore', git: 'https://github.com/department-of-veterans-affairs/apivore', branch: 'master'
   gem 'awrence'
-  gem 'codeclimate_circle_ci_coverage'
   gem 'fakeredis'
   gem 'pact', require: false
   gem 'pact-mock_service', require: false
@@ -141,6 +140,7 @@ group :test do
   # < 0.18 required due to bug with reporting to CodeClimate
   # https://github.com/codeclimate/test-reporter/issues/418
   gem 'simplecov', '< 0.18', require: false
+  gem 'simplecov-parallel'
   gem 'super_diff'
   gem 'vcr'
   gem 'webrick'
