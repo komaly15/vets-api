@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
+# rubocop:disable Metrics/MethodLength
 
 # spec/simplecov_helper.rb
 require 'active_support/inflector'
@@ -70,4 +70,4 @@ class SimpleCovHelper
   end
 end
 
-# rubocop:enable Metrics/ClassLength
+# rubocop:enable Metrics/MethodLength
