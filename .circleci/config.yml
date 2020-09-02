@@ -174,22 +174,14 @@
       steps:
         - attach_workspace:
             at: .
-        - save_cache:
+        - restore_cache:
             key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
-            paths:
-              - ~/vets-api
         - restore_cache:
             keys:
               - gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
               - gem-cache-{{ arch }}-{{ .Branch }}
               - gem-cache
         - run: bundle install --path vendor/bundle
-        - save_cache:
-            key: gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-            paths: 
-              - ~/vets-api/vendor/bundle 
-        - install_dependencies
-        - setup_test_db
         - run:
             name: Merge and Check Coverage
             command: RUN_COVERAGE=true bundle exec rake simplecov:report_coverage
