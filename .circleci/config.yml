@@ -174,7 +174,6 @@
       steps:
         - attach_workspace:
             at: .
-        - checkout
         - save_cache:
             key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
             paths:
