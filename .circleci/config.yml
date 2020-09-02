@@ -100,6 +100,8 @@
       executor: vets_api_docker_executor
       parallelism: 4
       steps:
+        - attach_workspace:
+            at: .
         - checkout_and_install
         - install_dependencies
         - setup_test_db
