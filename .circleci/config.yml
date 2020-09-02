@@ -80,12 +80,28 @@
       executor: vets_api_docker_executor
       parallelism: 4
       steps:
-        - checkout_and_install
+        - checkout
+        - save_cache:
+            key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
+            paths:
+              - ~/vets-api
+        - restore_cache:
+            keys:
+              - gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+              - gem-cache-{{ arch }}-{{ .Branch }}
+              - gem-cache
+        - run: bundle install --path vendor/bundle
+        - save_cache:
+            key: gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
+            paths: 
+              - ~/vets-api/vendor/bundle 
         - install_dependencies
         - setup_test_db
         - specs
         - store_test_results:
             path: /tmp/rspec
+        - store_artifacts:
+            path: ./coverage
         - run:
             name: Stash coverage Results
             command: |
