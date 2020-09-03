@@ -38,7 +38,6 @@
       executor: vets_api_docker_executor
       steps:
         - checkout_and_install
-        - install_dependencies
         - setup_test_db
         - verify_stable_pacts
         - store_test_results:
@@ -81,7 +80,6 @@
       parallelism: 4 
       steps:
         - checkout_and_install
-        - install_dependencies
         - setup_test_db
         - specs
         - store_test_results:
@@ -153,6 +151,7 @@
                 key: gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
                 paths: 
                   - ~/vets-api/vendor/bundle
+           - install_dependencies
     install_dependencies:
         steps:
             - run:
