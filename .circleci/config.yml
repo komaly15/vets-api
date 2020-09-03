@@ -98,7 +98,6 @@
     coverage:
       working_directory: ~/vets-api
       executor: vets_api_docker_executor
-      parallelism: 4
       steps:
         - attach_workspace:
             at: .
