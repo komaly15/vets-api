@@ -110,7 +110,7 @@
               - gem-cache-{{ arch }}-{{ .Branch }}
               - gem-cache
         - run: bundle install --path vendor/bundle 
-		- install_dependencies
+        - install_dependencies
         - run:
             name: Merge and Check Coverage
             command: RUN_COVERAGE=true bundle exec rake simplecov:report_coverage
