@@ -51,21 +51,7 @@
       working_directory: ~/vets-api
       executor: vets_api_docker_executor
       steps:
-        - checkout
-        - save_cache:
-            key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
-            paths:
-              - ~/vets-api
-        - restore_cache:
-            keys:
-              - gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-              - gem-cache-{{ arch }}-{{ .Branch }}
-              - gem-cache
-        - run: bundle install --path vendor/bundle
-        - save_cache:
-            key: gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-            paths: 
-              - ~/vets-api/vendor/bundle 
+        - checkout_and_install
         - bundle_audit
         - store_test_results:
             path: ./rspec
@@ -77,21 +63,7 @@
       working_directory: ~/vets-api
       executor: vets_api_docker_executor
       steps:
-        - checkout
-        - save_cache:
-            key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
-            paths:
-              - ~/vets-api
-        - restore_cache:
-            keys:
-              - gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-              - gem-cache-{{ arch }}-{{ .Branch }}
-              - gem-cache
-        - run: bundle install --path vendor/bundle
-        - save_cache:
-            key: gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-            paths: 
-              - ~/vets-api/vendor/bundle 
+        - checkout_and_install
         - security_check
         - store_artifacts:
             path: ./ci	
@@ -99,21 +71,7 @@
       working_directory: ~/vets-api
       executor: vets_api_docker_executor
       steps:
-        - checkout
-        - save_cache:
-            key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
-            paths:
-              - ~/vets-api
-        - restore_cache:
-            keys:
-              - gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-              - gem-cache-{{ arch }}-{{ .Branch }}
-              - gem-cache
-        - run: bundle install --path vendor/bundle
-        - save_cache:
-            key: gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-            paths: 
-              - ~/vets-api/vendor/bundle 
+        - checkout_and_install
         - linting
         - store_artifacts:
             path: ./ci
@@ -122,21 +80,7 @@
       executor: vets_api_docker_executor
       parallelism: 4 
       steps:
-        - checkout
-        - save_cache:
-            key: v2-repo-{{ .Environment.CIRCLE_SHA1 }}
-            paths:
-              - ~/vets-api
-        - restore_cache:
-            keys:
-              - gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-              - gem-cache-{{ arch }}-{{ .Branch }}
-              - gem-cache
-        - run: bundle install --path vendor/bundle
-        - save_cache:
-            key: gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-            paths: 
-              - ~/vets-api/vendor/bundle 
+        - checkout_and_install
         - install_dependencies
         - setup_test_db
         - specs
