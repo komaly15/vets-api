@@ -3,6 +3,7 @@
 require 'rails_helper'
 require 'emis/veteran_status_service'
 require 'emis/responses/get_veteran_status_response'
+require 'emis/errors/service_error'
 
 # frozen_string_literal: true
 require 'emis/service'

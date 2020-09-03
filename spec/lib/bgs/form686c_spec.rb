@@ -2,6 +2,7 @@
 
 require 'rails_helper'
 require 'bgs/form686c'
+require 'bgs/vnp_veteran'
 
 RSpec.describe BGS::Form686c do
   let(:user_object) { FactoryBot.create(:evss_user, :loa3) }
