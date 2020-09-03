@@ -151,7 +151,7 @@
                 key: gem-cache-{{ arch }}-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
                 paths: 
                   - ~/vets-api/vendor/bundle
-           - install_dependencies
+            - install_dependencies
     install_dependencies:
         steps:
             - run:
