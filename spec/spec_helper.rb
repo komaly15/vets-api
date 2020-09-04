@@ -14,7 +14,10 @@ require 'support/okta_users_helpers'
 require 'pundit/rspec'
 
 # By default run SimpleCov, but allow an environment variable to disable.
-unless ENV['NOCOVERAGE']
+# We run our specs in parallel across multiple nodes in CircleCI
+# This results in a partial coverage report acrosss each node
+# A separate rake task invokes a report merge
+unless ENV['CIRCLE_JOB'] 
   require 'simplecov'
 
   SimpleCov.start 'rails' do
