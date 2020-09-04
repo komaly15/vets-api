@@ -16,8 +16,8 @@ require 'pundit/rspec'
 # By default run SimpleCov, but allow an environment variable to disable.
 # We run our specs in parallel across multiple nodes in CircleCI
 # This results in a partial coverage report acrosss each node
-# A separate rake task invokes a report merge
-unless ENV['CIRCLE_JOB'] 
+# A separate rake task via Circle Job merges these results into one complete report
+unless ENV['CIRCLE_JOB']
   require 'simplecov'
 
   SimpleCov.start 'rails' do
