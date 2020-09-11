@@ -3,7 +3,7 @@
   orbs:
     ruby: circleci/ruby@0.2.1
 
-  # Pipeline params are needed for API v2 in order  to
+  # Pipeline params are needed for API v2 in order to
   # trigger a conditional verification task workflow via webhook from the pact broker
   # Triggering a specific job via v1.1 of the Circle API is being depreciated
   parameters:
@@ -32,10 +32,13 @@
             POSTGRES_PASSWORD: ""
         - image: circleci/redis:3.2-alpine # 3.2.4 engine on AWS Elasticache
 
+  defaults: &defaults
+    working_directory: ~/vets-api
+    executor: vets_api_docker_executor
+
   jobs:
     verify_pacts:
-      working_directory: ~/vets-api
-      executor: vets_api_docker_executor
+      <<: *defaults
       steps:
         - checkout_and_install
         - setup_test_db
@@ -47,8 +50,7 @@
         - store_artifacts:
             path: ./coverage
     bundle_audit:
-      working_directory: ~/vets-api
-      executor: vets_api_docker_executor
+      <<: *defaults
       steps:
         - checkout_and_install
         - bundle_audit
@@ -59,24 +61,21 @@
         - store_artifacts:
             path: ./coverage
     security_audit:
-      working_directory: ~/vets-api
-      executor: vets_api_docker_executor
+      <<: *defaults
       steps:
         - checkout_and_install
         - security_check
         - store_artifacts:
             path: ./ci
     lint:
-      working_directory: ~/vets-api
-      executor: vets_api_docker_executor
+      <<: *defaults
       steps:
         - checkout_and_install
         - linting
         - store_artifacts:
             path: ./ci
     specs:
-      working_directory: ~/vets-api
-      executor: vets_api_docker_executor
+      <<: *defaults
       parallelism: 4
       steps:
         - checkout_and_install
@@ -96,8 +95,7 @@
             paths:
               - coverage_results
     coverage:
-      working_directory: ~/vets-api
-      executor: vets_api_docker_executor
+      <<: *defaults
       steps:
         - attach_workspace:
             at: .
