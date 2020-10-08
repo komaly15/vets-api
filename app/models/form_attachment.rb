@@ -9,7 +9,7 @@ class FormAttachment < ApplicationRecord
 
   before_destroy { |record| record.get_file.delete }
 
-  def set_file_data!(file)
+  def set_file_data!(file, _password = nil)
     attachment_uploader = get_attachment_uploader
     attachment_uploader.store!(file)
     self.file_data = { filename: attachment_uploader.filename }.to_json
