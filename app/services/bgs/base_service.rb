@@ -15,7 +15,7 @@ module BGS
       external_key = @user.common_name || @user.email
 
       BGS::Services.new(
-        external_uid: @user.icn,
+        external_uid: @user.icn || @user.uuid,
         external_key: external_key
       )
     end
