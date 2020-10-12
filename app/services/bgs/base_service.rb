@@ -14,6 +14,7 @@ module BGS
     def initialize_service
       external_key = @user.common_name || @user.email
 
+      binding.pry; fail
       BGS::Services.new(
         external_uid: @user.icn || @user.uuid,
         external_key: external_key
