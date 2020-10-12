@@ -13,6 +13,10 @@ RSpec.describe BGS::Service do
     let(:user_object) { build(:ch33_dd_user) }
 
     it 'retrieves a users dd eft info' do
+      VCR.configure do |c|
+        c.allow_http_connections_when_no_cassette = true
+      end
+      binding.pry; fail
       VCR.use_cassette('bgs/service/find_ch33_dd_eft', VCR::MATCH_EVERYTHING) do
         response = bgs_service.find_ch33_dd_eft
         expect(response.body[:find_ch33_dd_eft_response][:return][:dposit_acnt_nbr]).to eq('123')
