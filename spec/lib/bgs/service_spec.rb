@@ -17,6 +17,9 @@ RSpec.describe BGS::Service do
         c.allow_http_connections_when_no_cassette = true
       end
       allow(user_object).to receive(:icn).and_return(nil)
+      BGS.configure do |config|
+        config.log = true
+      end
       binding.pry; fail
       VCR.use_cassette('bgs/service/find_ch33_dd_eft', VCR::MATCH_EVERYTHING) do
         response = bgs_service.find_ch33_dd_eft
